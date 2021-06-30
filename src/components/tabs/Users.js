@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import PropTypes from 'prop-types';
-import store from '../../renderer/store.js';
+import NewUserDisplay from '../display/NewUserDisplay';
 
 // Material UI imports
 import { makeStyles, useTheme } from '@material-ui/core/styles';
@@ -20,12 +20,9 @@ import IconButton from '@material-ui/core/IconButton';
 import KeyboardArrowLeft from '@material-ui/icons/KeyboardArrowLeft';
 import KeyboardArrowRight from '@material-ui/icons/KeyboardArrowRight';
 import Checkbox from '@material-ui/core/Checkbox';
+
 // Redux Imports (actions)
 import * as actions from '../../actions/actions';
-
-import SignupModal from '../login/signupModal.js';
-import Modal from 'react-modal';
-import Button from '@material-ui/core/Button';
 
 // Table Style Generator
 export const useStyles = makeStyles({
@@ -53,7 +50,7 @@ function TablePaginationActions(props) {
   };
 
   const handleBackButtonClick = (event) => {
-    onChangePage                                                                                                                        (event, page - 1);
+    onChangePage(event, page - 1);
   };
 
   const handleNextButtonClick = (event) => {
@@ -105,11 +102,9 @@ TablePaginationActions.propTypes = {
 const UserTable = () => {
 
   const classes = useStyles();
-  const [userList, setUserList] = useState();
   const rows = useSelector((state) => state.userList.userList);
   const dispatch = useDispatch();
   const updateUserRole = (data) => dispatch(actions.updateUserRole(data));
-  // const updateUserList = (userList) => dispatch(actions.updateUserList(userList));
 
   const tempSelected = {};
   for (let i = 0; i < rows.length; i++){
@@ -135,24 +130,7 @@ const UserTable = () => {
     setRowsPerPage(parseInt(event.target.value, 10));
     setPage(0);
   };
-
-  // React Hooks: Local state variables 
-  const [ modalIsOpen, setIsOpen ] = useState(false);
-  // const [userList, setUserList] = useState();
-
-  // Modal functions
-  const openModal = () => setIsOpen(true);
-  const closeModal = () => {
-    setIsOpen(false);
-    // updateUserList();
-  };
-  console.log(store.getState() ,'store');
-  // Need to set the app element to body for screen-readers (disability), otherwise modal will throw an error
-  useEffect(() => {
-    Modal.setAppElement('body');
-  }, []);
-
-
+ 
   const handleCheckboxClick = (event) => {
     // event persist is required to access target property of event. Without this, a synthetic event object would be used where target is re-assigned to null for performance reasons
     event.persist();
@@ -161,8 +139,8 @@ const UserTable = () => {
     const id = event.target.getAttribute('id');
     const invertPreviousValue = (!selected[id]);
     // Bug: unable to pull custom attribute on Checkbox props, even with getAttribute https://www.pluralsight.com/guides/how-to-access-custom-attributes-from-aevent-object-in-react
-    console.log('checkbox clicked: ', event.target.getAttribute('userid'));
-    console.log('checkbox clicked: ', event.target.userid);
+    // console.log('checkbox clicked: ', event.target.getAttribute('userid'));
+    // console.log('checkbox clicked: ', event.target.userid);
 
     // create temporary copy of selected object
     const temp = {
@@ -267,9 +245,6 @@ const UserTable = () => {
             </TableBody>
             <TableFooter>
               <TableRow>
-                <Button variant="contained" size="medium" className={classes.button} onClick={openModal}>
-                Sign Up
-                </Button>                
                 <TablePagination
                   rowsPerPageOptions={[5, 10, { label: 'All', value: -1 }]}
                   colSpan={10}
@@ -288,14 +263,9 @@ const UserTable = () => {
             </TableFooter>
           </Table>
         </TableContainer>
-        <Modal
-          isOpen={modalIsOpen}
-          onRequestClose={closeModal}
-          contentLabel='Modal to make user account'
-        >
-          <SignupModal closeModal={closeModal}/>
-        </Modal>
       </div>
+      <br></br>
+      <NewUserDisplay />
     </div>
   );
 };

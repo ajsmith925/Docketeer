@@ -12,7 +12,7 @@
 // Npm Module Imports
 import React from 'react';
 import { useDispatch } from 'react-redux';
-import{ useState } from 'react';
+
 // Redux Imports (actions)
 import * as actions from '../../actions/actions';
 
@@ -35,7 +35,7 @@ const SignupModal = (props) => {
   // Map dispatch to props, particularly the reducer method updateSession to update state.session.isLoggedIn
   const dispatch = useDispatch();
   const updateSession = () => dispatch(actions.updateSession());
-  const updateUserList = () => dispatch(actions.updateUserList());
+
   // Material UI
   const classes = useStyles();
 
@@ -107,12 +107,10 @@ const SignupModal = (props) => {
           window.alert(data.error);
         }
         else {
-          // updateSession();
+          updateSession();
           console.log('USER DATA: ', data);
           // eslint-disable-next-line react/prop-types
           props.closeModal();
-          getUsers();
-          setUserList(data);
         }
       })
       .catch((err) => {
@@ -120,35 +118,19 @@ const SignupModal = (props) => {
       });
   };
 
-  function getUsers() {
-    fetch('http://localhost:3000/signup')
-      .then(response => response.json())
-      .then(response => console.log(response, 'response'))
-      .catch((err) => {
-        console.log(err);
-      });
-  }
-
   return (
     <div>
       <h1>Signup</h1>
       <form onSubmit={handleClick} className={classes.root} >
-        {/* <input id="signupEmail" type="text" placeholder="email"></input><br></br> */}
         <TextField id="signupEmail" label="Email" variant="outlined" /><br></br>
         <TextField id="signupUsername" label="Username" variant="outlined" /><br></br>
         <TextField id="signupPassword" label="Password" variant="outlined" type="password" /><br></br>
+        <span id="password-alert"></span>
         <TextField id="signupPasswordConfirmation" label="Password" variant="outlined" type="password" /><br></br>
         <TextField id="signupPhone" label="Phone" variant="outlined" /><br></br>
-        {/* <input id="signupUsername" type="text" placeholder="username"></input><br></br>
-        <input id="signupPassword" type="password" placeholder="password"></input><br></br>
-        <input id="signupPasswordConfirmation" type="password" placeholder="confirm"></input>
-        <span id="password-alert"></span> 
-        <br></br>
-        <input id="signupPhone" type="text" placeholder="phone number"></input><br></br> */}
-        <Button variant="contained" size="medium" className={classes.button} type="submit" onClick={() => updateUserList}>
+        <Button variant="contained" size="medium" className={classes.button} type="submit">
           Submit
         </Button>
-        {/* <input type="submit"></input> */}
       </form>
     </div>
   );
