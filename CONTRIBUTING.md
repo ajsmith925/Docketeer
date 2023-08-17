@@ -8,12 +8,11 @@ All code changes happen through Github Pull Requests and we actively welcome the
 
 ## Pull Requests
 
-1. Fork the repo and create your featured branch.
-2. If you've added code that should be tested, add tests.
-3. Ensure the test suite passes and on Travis CI as well.
-4. Make sure your code lints.
-5. Issue that pull request!
-6. Specify what you changed in details when you are doing pull request.
+1. Fork and clone the repository.
+2. Create your feature branch. (git checkout -b [my-new-feature])
+3. Make sure to cover your code with tests and that your code is linted in accordance with our linting specifications (see coding style below).
+4. Commit your changes locally (git commit -m 'Added some feature') and then push to your remote repository.
+5. Create a Pull Request.
 
 Note: Any contributions you make will be under the MIT Software License and your submissions are understood to be under the same that covers the project. Please reach out to the team if you have any questions.
 
@@ -29,7 +28,7 @@ Run npm run lint to comform to our lint rules
 
 ## License
 
-By contributing, you agree that your contributions will be licensed under Quell's MIT License.
+By contributing, you agree that your contributions will be licensed under Docketeer's MIT License.
 
 ### References
 
